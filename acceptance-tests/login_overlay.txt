@@ -1,12 +1,18 @@
 *** Settings ***
-Resource  plone.txt
+#Resource  plone.txt
+#Resource  library-settings.txt
+Library     Selenium2Library  timeout=0 seconds  implicit_wait=5 seconds
 
 Suite setup
 
-Test setup  Log out
+Test setup  Log out and go home
 
 
 *** Variables ***
+
+${PORT} =  8080
+${ZOPE_URL} =  http://localhost:${PORT}
+${PLONE_URL} =  ${ZOPE_URL}/Plone
 
 ${overlay_login_selector} =         css=div.overlay-ajax form#login_form
 ${overlay_login_submit_selector} =  ${overlay_login_selector} input[name="submit"]
@@ -55,13 +61,45 @@ SubmitLogin
     Wait Until Page Contains Element  ${personaltools_logout_selector}
 
     # overlay should be gone
-    Wait until keyword succeeds  1  5  Page Should Not Contain Element  ${overlay_login_selector}
-    #Page Should Not Contain Element  ${overlay_login_selector}
+    #Wait until keyword succeeds  1  5  Page Should Not Contain Element  ${overlay_login_selector}
+    Page Should Not Contain Element  ${overlay_login_selector}
 
+Test Login Successful
+    Open login overlay
+    Login with credentials  admin  admin
+    Overlay should be gone
+
+Hello World
+    Go to  http://plone.org
+    Click link  Get Involved
+
+    Page should contain  Help make Plone even better
+    Page should contain  Create bug fixes, develop new features
 
 *** Keywords ***
 
 Open login overlay
     Click Element  ${personaltools_login_selector}
-    Wait until keyword succeeds  1  5  Page Should Contain Element  ${overlay_login_selector}
-    #Page Should Contain Element  ${overlay_login_selector}
+    Page Should Contain Element  ${overlay_login_selector}
+    Page should contain element  __ac_name
+
+Login with credentials  [Arguments]  ${username}  ${password}
+    Input text  __ac_name      ${username}
+    Input text  __ac_password  ${password}
+    Click Button  Log in
+    Wait Until Page Contains Element  ${personaltools_logout_selector}
+
+Overlay should be gone
+    Page Should Not Contain Element  ${overlay_login_selector}
+
+Goto homepage
+    Go to   ${PLONE_URL}
+    Page should contain  Plone site
+
+Log out
+    Go to  ${PLONE_URL}/logout
+    Page should contain  logged out
+
+Log out and go home
+    Log out
+    Goto homepage

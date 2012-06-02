@@ -9,23 +9,23 @@ Test setup
 
 Create Document
     [Tags]  action-menu
-    Click Link  link=Home
+    Click Link  Home
     Open Add New Menu
     Click Link  link=Page
-    Input Text  title  An actionsmenu page
+    Input Text  name=title  An actionsmenu page
     Click Button  Save
 
 Create Folder
     [Tags]  action-menu
-    Click Link  link=Home
+    Click Link  Home
     Open Add New Menu
-    Click Link  link=Folder
+    Click Link  css=#plone-contentmenu-factories a#folder
     Input Text  title  An actionsmenu folder
     Click Button  Save
 
 Content Menu
     [Tags]  action-menu
-    Click Link  link=Home
+    Click Link  Home
     Click Link  An actionsmenu page
     Element Should Not Be Visible  css=a#delete
     Click Link  css=dl#plone-contentmenu-actions dt.actionMenuHeader a
@@ -60,7 +60,8 @@ Clicking outside of Actions Menu
     Element Should Be Visible  css=a#delete
     Element Should Not Be Visible  css=a#advanced
     Mouse Down  css=h1
-    Wait until keyword succeeds  10s  1s  Element Should Not Be Visible  css=a#delete
+    #Wait until keyword succeeds  10s  1s  Element Should Not Be Visible  css=a#delete
+    Element Should Not Be Visible  css=a#delete
     Element Should Not Be Visible  css=a#advanced
 
 Publish Document
@@ -77,7 +78,8 @@ Copy Document
     Click Link  An actionsmenu page
     Open Action Menu
     Click Link  link=Copy
-    Wait until keyword succeeds  10s  1s  Page Should Contain  An actionsmenu page copied.
+    #Wait until keyword succeeds  10s  1s  Page Should Contain  An actionsmenu page copied.
+    Page Should Contain  An actionsmenu page copied.
     Click Link  An actionsmenu folder
     Open Action Menu
     Click Link  link=Paste
@@ -89,6 +91,7 @@ Copy Document
 
 Delete Document
     [Tags]  action-menu
+    Click Link  Home
     Click Link  link=An actionsmenu page
     Element Should Not Be Visible  css=a#delete
     Click Link  css=dl#plone-contentmenu-actions dt.actionMenuHeader a
@@ -99,6 +102,7 @@ Delete Document
 
 Delete Folder
     [Tags]  action-menu
+    Click Link  Home
     Click Link  An actionsmenu folder
     Element Should Not Be Visible  css=a#delete
     Click Link  css=dl#plone-contentmenu-actions dt.actionMenuHeader a

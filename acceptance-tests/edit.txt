@@ -98,7 +98,7 @@ Delete Edit Document
     Element Should Not Be Visible  css=a#delete
     Open Action Menu
     Element Should Be Visible  css=a#delete
-    Click Overlay Link  Delete
+    Click Overlay Link  link=Delete
     Page Should Contain  Do you really want to delete this item?
     Click Button  css=form#delete_confirmation input.destructive
 
@@ -109,7 +109,7 @@ Delete Related Document
     Element Should Not Be Visible  css=a#delete
     Open Action Menu
     Element Should Be Visible  css=a#delete
-    Click Overlay Link  Delete
+    Click Overlay Link  link=Delete
     Page Should Contain  Do you really want to delete this item?
     Click Button  css=form#delete_confirmation input.destructive
 

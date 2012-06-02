@@ -14,7 +14,7 @@ Start browser and wake plone up
 
 #    Start selenium server
 
-    Set Selenium timeout  3s
+    Set Selenium Timeout  3s
     
     ${previous}  Register keyword to run on failure  Close Browser
     Wait until keyword succeeds  2min  3s  Open Browser  ${ZOPE_URL}  browser=${BROWSER}
@@ -38,6 +38,10 @@ Goto homepage
 Log out
     Go to  ${PLONE_URL}/logout
     Page should contain  logged out
+
+Log out and go home
+    Log out
+    Goto homepage
 
 Log in
     [Arguments]  ${userid}  ${password}
